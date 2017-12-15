@@ -2,6 +2,7 @@
 
 
 <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
+[![Build Status](https://travis-ci.org/ruanmartinelli/hacker-news-graphql-api.svg?branch=master)](https://travis-ci.org/ruanmartinelli/hacker-news-graphql-api)
 
 > A subset of Hacker News' API built with GraphQL and Express
 
