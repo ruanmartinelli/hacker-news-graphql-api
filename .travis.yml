@@ -10,5 +10,8 @@ cache:
 env:
   APP_PORT=9900
 
+before_script:
+  - npm install
+
 script:
   - npm test
