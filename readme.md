@@ -5,7 +5,7 @@
 
 > A subset of Hacker News' API built with GraphQL and Express
 
-:construction: _This project is a WIP_
+:construction: **This project is a WIP**
 
 ### Develop
 
