@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+  - "9"
+
+cache:
+  directories:
+    - "node_modules"
+
+env:
+  APP_PORT=9900
+
+script:
+  - npm test
