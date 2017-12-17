@@ -23,3 +23,20 @@ it('should fetch an item given an id', async () => {
   expect(data.item).toHaveProperty('score')
   expect(data.item).toHaveProperty('title')
 })
+
+it('should fetch top stories', async () => {
+  const query = `
+  query Q {
+    topStories {
+      id,
+      score,
+      title
+    }
+  }`
+
+  const result = await graphql(schema, query)
+  const { data } = result
+
+  expect(data.topStories).toBeDefined()
+  expect(Array.isArray(data.topStories)).toBe(true)
+})

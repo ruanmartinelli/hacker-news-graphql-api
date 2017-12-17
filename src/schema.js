@@ -35,6 +35,21 @@ const RootQuery = new GraphQLObjectType({
         const { data } = await get(url)
         return data
       }
+    },
+    topStories: {
+      type: new GraphQLList(ItemType),
+      resolve: async () => {
+        const url = `https://hacker-news.firebaseio.com/v0/topstories.json`
+        const { data: ids } = await get(url)
+        const topThree = [ids[0], ids[1], ids[2]]
+        const itemPromises = topThree.map(id => {
+          // prettier-ignore
+          return get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+            .then(res => res.data)
+        })
+
+        return Promise.all(itemPromises)
+      }
     }
   }
 })
