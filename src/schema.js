@@ -11,16 +11,16 @@ const ItemType = new GraphQLObjectType({
   name: 'Item',
   description: 'An item from the HN API',
   fields: () => ({
-    by: { type: GraphQLString },
-    descendants: { type: GraphQLInt },
-    id: { type: GraphQLInt },
-    kids: { type: new GraphQLList(GraphQLInt) },
-    score: { type: GraphQLInt },
-    text: { type: GraphQLString },
-    time: { type: GraphQLInt },
-    title: { type: GraphQLString },
-    type: { type: GraphQLString },
-    url: { type: GraphQLString }
+    by: { type: GraphQLString, resolve: item => item.by },
+    descendants: { type: GraphQLInt, resolve: item => item.descendants },
+    id: { type: GraphQLInt, resolve: item => item.id },
+    kids: { type: new GraphQLList(GraphQLInt), resolve: item => item.kids },
+    score: { type: GraphQLInt, resolve: item => item.score },
+    text: { type: GraphQLString, resolve: item => item.text },
+    time: { type: GraphQLInt, resolve: item => item.time },
+    title: { type: GraphQLString, resolve: item => item.title },
+    type: { type: GraphQLString, resolve: item => item.type },
+    url: { type: GraphQLString, resolve: item => item.url }
   })
 })
 
