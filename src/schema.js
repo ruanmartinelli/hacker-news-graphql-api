@@ -1,5 +1,5 @@
+/* global fetch */
 import DataLoader from 'dataloader'
-import { get } from 'axios'
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -11,13 +11,14 @@ import {
 
 function fetchItem (id) {
   const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`
-  return get(url).then(res => res.data)
+  return fetch(url).then(res => res.json()) // .then(console.log)
 }
 
 function fetchTopStories () {
   const url = `https://hacker-news.firebaseio.com/v0/topstories.json`
-  return get(url)
-    .then(({ data: ids }) => ids.slice(0, 3))
+  return fetch(url)
+    .then(res => res.json())
+    .then(ids => ids.slice(0, 3))
     .then(ids => ids.map(fetchItem))
 }
 

@@ -1,3 +1,4 @@
+import 'isomorphic-fetch'
 import schema from '../src/schema'
 import { graphql } from 'graphql'
 
