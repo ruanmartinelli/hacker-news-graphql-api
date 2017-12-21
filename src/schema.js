@@ -5,13 +5,12 @@ import {
   GraphQLString,
   GraphQLSchema,
   GraphQLInt,
-  GraphQLList,
-  GraphQLNonNull
+  GraphQLList
 } from 'graphql'
 
 function fetchItem (id) {
   const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`
-  return fetch(url).then(res => res.json()) // .then(console.log)
+  return fetch(url).then(res => res.json())
 }
 
 function fetchTopStories () {
@@ -48,7 +47,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     item: {
       type: ItemType,
-      args: { id: { type: new GraphQLNonNull(GraphQLInt) } },
+      args: { id: { type: GraphQLInt } },
       resolve: (root, args) => itemLoader.load(args.id)
     },
     topStories: {
