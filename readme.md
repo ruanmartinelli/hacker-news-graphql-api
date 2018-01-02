@@ -42,6 +42,10 @@ Test any changes you make with the following command:
 npm t
 ```
 
+### Thanks
+
+Big thanks to [@jgcmarins](https://github.com/jgcmarins), who helped with his GraphQL superpowers
+
 ### License
 
 MIT © [Ruan Martinelli](http://ruanmartinelli.com)
