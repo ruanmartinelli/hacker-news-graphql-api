@@ -1,4 +1,5 @@
-import { get } from 'axios'
+/* global fetch */
+import DataLoader from 'dataloader'
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -6,6 +7,23 @@ import {
   GraphQLInt,
   GraphQLList
 } from 'graphql'
+
+function fetchItem (id) {
+  const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`
+  return fetch(url).then(res => res.json())
+}
+
+function fetchTopStories () {
+  const url = `https://hacker-news.firebaseio.com/v0/topstories.json`
+  return fetch(url)
+    .then(res => res.json())
+    .then(ids => ids.slice(0, 3))
+    .then(ids => ids.map(fetchItem))
+}
+
+const itemLoader = new DataLoader(async keys =>
+  Promise.all(keys.map(fetchItem))
+)
 
 const ItemType = new GraphQLObjectType({
   name: 'Item',
@@ -30,26 +48,11 @@ const RootQuery = new GraphQLObjectType({
     item: {
       type: ItemType,
       args: { id: { type: GraphQLInt } },
-      resolve: async (root, args) => {
-        const url = `https://hacker-news.firebaseio.com/v0/item/${args.id}.json`
-        const { data } = await get(url)
-        return data
-      }
+      resolve: (root, args) => itemLoader.load(args.id)
     },
     topStories: {
       type: new GraphQLList(ItemType),
-      resolve: async () => {
-        const url = `https://hacker-news.firebaseio.com/v0/topstories.json`
-        const { data: ids } = await get(url)
-        const topThree = [ids[0], ids[1], ids[2]]
-        const itemPromises = topThree.map(id => {
-          // prettier-ignore
-          return get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
-            .then(res => res.data)
-        })
-
-        return Promise.all(itemPromises)
-      }
+      resolve: (root, args) => fetchTopStories()
     }
   }
 })
